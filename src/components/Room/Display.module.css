@@ -1,0 +1,226 @@
+.scroller {
+    flex: 10;
+    overflow-y: auto;
+    background: url('../../assests/wallpaper.png');
+    background-size: 30%;
+}
+
+.scroller ::-webkit-scrollbar {
+    width: 0 !important;
+    display: none;
+}
+
+.display-div {
+    height: 96%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    color: rgb(199, 199, 199);
+}
+
+.text-div {
+    padding: 0.5rem 0.4rem;
+    width: fit-content;
+    display: flex;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+}
+
+.personal-box {
+    float: right;
+    background-color: #01593c;
+    border-radius: 10px;
+}
+
+.new_personal-box::before {
+    content: '';
+    position: absolute;
+    left: 100%;
+    top: 0;
+    border-top: 12px solid #01593c;
+    border-right: 10px solid transparent;
+}
+
+.others-box {
+    float: left;
+    background-color: #33393d;
+    border-radius: 10px;
+}
+
+.new_personal-box {
+    border-radius: 10px 0px 10px 10px;
+}
+
+.new_others-box {
+    border-radius: 0px 10px 10px 10px;
+}
+
+.new_others-box::before {
+    content: '';
+    position: absolute;
+    right: 100%;
+    top: 0;
+    border-top: 12px solid #33393d;
+    border-left: 10px solid transparent;
+}
+
+.text-div>div {
+    overflow: hidden;
+}
+
+.time-span {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.3rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    color: rgba(151, 150, 150, 0.796);
+    font-weight: bold;
+}
+
+.text-div>div>span {
+    position: absolute;
+    font-size: 0.8rem;
+    padding: 0rem 0.3rem;
+    text-transform: capitalize;
+    color: gray;
+    font-weight: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.img-msg {
+    max-width: 11rem;
+    border-radius: 5px;
+}
+
+.download-btn {
+    display: none;
+    position: absolute;
+    top: 5px;
+    right: -4px;
+    margin: 10px;
+}
+
+.pdf-msg-container {
+    min-width: 22.4rem;
+    max-width: 96%;
+    background-color: rgba(111, 111, 111, 0.6);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.5rem;
+    gap: 0.5rem;
+}
+
+.pdf-btns-container {
+    display: flex;
+    gap: 1rem;
+}
+
+.pdf-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.pdf-container object {
+    width: 30rem;
+    height: 40rem;
+    align-self: center;
+}
+
+.pdf-name-container {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem
+}
+
+.last-message {
+    margin-bottom: 1rem;
+}
+
+
+@media (max-width:768px) {
+    .scroller {
+        background: url('../../assests/wallpaper.png');
+        background-size: 70%;
+
+    }
+
+    .display-div {
+        padding: 0.5rem;
+        gap: 0.2rem;
+    }
+
+    .text-div>div>span {
+        font-size: 0.6rem;
+        padding: 0rem 0.3rem;
+    }
+
+    .text-div {
+        padding: 0.3rem 0.2rem;
+    }
+
+    .time-span {
+        font-size: 0.55rem;
+    }
+
+    .personal-box {
+        border-radius: 5px;
+    }
+
+    .others-box {
+        float: left;
+        background-color: #33393d;
+        border-radius: 5px;
+    }
+
+
+    .new_personal-box {
+        border-radius: 5px 0px 5px 5px;
+    }
+
+    .new_others-box {
+        border-radius: 0px 5px 5px 5px;
+    }
+
+    .new_personal-box::before {
+        border-top: 8px solid #01593c;
+        border-right: 6px solid transparent;
+    }
+
+    .new_others-box::before {
+        border-top: 8px solid #33393d;
+        border-left: 6px solid transparent;
+    }
+
+    .img-msg {
+        max-width: 7rem;
+    }
+
+    .pdf-msg-container {
+        min-width: 14.4rem;
+        border-radius: 5px;
+        padding: 0.35rem;
+        gap: 0.35rem;
+    }
+
+    .pdf-container object {
+        height: 30rem;
+        align-self: center;
+    }
+
+    .last-message {
+        margin-bottom: 0.5rem;
+    }
+
+    .download-btn {
+        display: none;
+        position: absolute;
+        top: -2px;
+        right: -6px;
+        margin: 8px;
+    }
+}
