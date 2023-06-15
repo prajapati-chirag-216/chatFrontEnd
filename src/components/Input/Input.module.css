@@ -33,6 +33,7 @@
 
 @media(max-width:768px) {
     .input-div {
+        flex: 0.95;
         gap: 0.5rem
     }
 

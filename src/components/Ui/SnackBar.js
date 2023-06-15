@@ -55,13 +55,12 @@ const SimpleSnackBar = () => {
       {snackBarDetails.text && (
         <Button
           color="primary"
-          // size="small"
           onClick={roomChangeHandler.bind(
             null,
             snackBarDetails.room,
             snackBarDetails.user
           )}
-          sx={{ fontSize: !matches ? "1.1rem" : "0.7rem" }}
+          sx={{ fontSize: !matches ? "1rem" : "0.7rem" }}
         >
           Open
         </Button>
@@ -71,9 +70,8 @@ const SimpleSnackBar = () => {
         aria-label="close"
         color="inherit"
         onClick={handleClose}
-        sx={{ fontSize: !matches ? "1rem" : "0.8rem" }}
       >
-        <CloseIcon sx={{ fontSize: !matches ? "1rem" : "0.9rem" }} />
+        <CloseIcon sx={{ fontSize: !matches ? "1.3rem" : "0.9rem" }} />
       </IconButton>
     </React.Fragment>
   );
