@@ -14,8 +14,8 @@
 .open_roombar-slider {
     position: absolute;
     transition: all 500ms;
-    height: 100vh;
-    bottom: 0;
+    height: 99.8vh;
+    /* bottom: 0; */
     overflow: hidden;
     z-index: 100;
 }
