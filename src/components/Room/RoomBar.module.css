@@ -4,19 +4,16 @@
     border: 1px solid rgba(26, 25, 25, 0.827);
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 100vh;
     z-index: 100;
     user-select: none;
     overflow: hidden;
-    /* bottom: 0; */
 }
 
 .open_roombar-slider {
     position: absolute;
     transition: all 500ms;
-    /* height: 99.8vh; */
-    height: auto;
-    /* bottom: 0; */
+    height: 99.8vh;
     overflow: hidden;
     z-index: 100;
 }
