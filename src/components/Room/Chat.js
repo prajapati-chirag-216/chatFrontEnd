@@ -9,7 +9,8 @@ import Header from "./Header";
 import { messageActions } from "../../store/message-slice";
 import { uiActions } from "../../store/ui-slice";
 import { useNavigate } from "react-router-dom";
-const ENDPOINT = "https://chatbackend-production-3e35.up.railway.app";
+const ENDPOINT = "http://localhost:8000";
+// const ENDPOINT = "https://chatbackend-production-3e35.up.railway.app";
 
 let socket;
 
@@ -75,7 +76,6 @@ const Chat = (props) => {
         }
       });
     } else {
-      console.log("else");
       navigate("/dashbord");
       dispatch(
         uiActions.setSnackBar({
@@ -127,7 +127,6 @@ const Chat = (props) => {
       dispatch(messageActions.setMessages(user));
     });
     socket.on("recive_private_message", (data) => {
-      console.log("derials  ", userDetails, data);
       if (data.privateRoom !== currentRoom) {
         const isText =
           userDetails?.privateRoom && userDetails.privateRoom[data.id];

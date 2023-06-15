@@ -176,7 +176,6 @@ const RoomBar = (props) => {
           {users.room}
         </Typography>
 
-        {/* <a href="/dashbord"> */}
         <ExitToAppRoundedIcon
           color="white"
           onClick={() => navigate("/dashbord", { replace: true })}
@@ -193,7 +192,6 @@ const RoomBar = (props) => {
             },
           }}
         />
-        {/* </a> */}
       </div>
       <div className={classes["user-div"]}>
         {users.usersInRoom &&
@@ -229,8 +227,15 @@ const RoomBar = (props) => {
                         "&:hover": {
                           color: "whitesmoke",
                         },
+                        "&:active": {
+                          scale: "95%",
+                        },
                       }}
-                      onClick={addUserToPrivateRoomHandler.bind(null, user)}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        addUserToPrivateRoomHandler(user);
+                      }}
+                      // onClick={addUserToPrivateRoomHandler.bind(null, user)}
                     />
                   )}
               </div>
@@ -250,8 +255,12 @@ const RoomBar = (props) => {
                               fontSize: !matches ? "1.3rem" : "0.9rem",
                               cursor: "pointer",
                               display: "none",
+                              color: "gray",
                               "&:hover": {
-                                color: "#07a326",
+                                color: "whitesmoke",
+                              },
+                              "&:active": {
+                                scale: "95%",
                               },
                             }}
                             onClick={addUserToPrivateRoomHandler.bind(

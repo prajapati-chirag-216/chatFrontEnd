@@ -164,7 +164,6 @@
     display: block;
 }
 
-
 .group-div:hover+.togal-div {
     display: block;
 }
@@ -199,13 +198,15 @@
     .details-div {
         gap: 0.7rem;
         padding: 0.6rem;
-        color: whitesmoke;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        letter-spacing: 1px;
-        overflow: hidden;
-        border-radius: 4px;
+        letter-spacing: 0.5px;
         font-size: 0.7rem;
-        text-transform: capitalize;
+    }
+
+    .group-details-div {
+        gap: 0.7rem;
+        padding: 0.6rem;
+        letter-spacing: 0.5px;
+        font-size: 0.7rem;
     }
 
     .time-span {
@@ -216,5 +217,22 @@
     .group-time-span {
         letter-spacing: 0.5px;
         font-size: 0.7rem;
+    }
+
+    .togal-div {
+        margin: 0.5rem;
+        padding: 0.3rem;
+        border-radius: 3px;
+        margin-top: 0.5rem;
+    }
+
+    .togal-div::before {
+        content: '';
+        position: absolute;
+        top: -12px;
+        left: 15px;
+        border-bottom: 12px solid #36393c;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
     }
 }
