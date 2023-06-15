@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Chat from "../../components/Room/Chat";
 import RoomBar from "../../components/Room/RoomBar";
-import classes from "./Room.module.css";
+import classes from "./ChatRoom.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
 import { userActions } from "../../store/user-slice";
