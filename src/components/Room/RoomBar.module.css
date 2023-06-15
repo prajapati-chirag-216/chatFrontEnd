@@ -7,18 +7,20 @@
     height: 100vh;
     z-index: 100;
     user-select: none;
+    overflow: hidden;
+    bottom: 0;
 }
 
 .open_roombar-slider {
     position: absolute;
     transition: all 500ms;
-    height: 99.8vh;
+    height: 100vh;
+    bottom: 0;
     overflow: hidden;
     z-index: 100;
 }
 
 .close_roombar-slider {
-
     position: absolute;
     z-index: 100;
     transition: all 500ms;

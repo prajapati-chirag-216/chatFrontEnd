@@ -1,5 +1,12 @@
 import * as React from "react";
-import { Snackbar, Slide, Button, Box, Divider } from "@mui/material";
+import {
+  Snackbar,
+  Slide,
+  Button,
+  Box,
+  Divider,
+  useMediaQuery,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Typography } from "@mui/material";
 import { uiActions } from "../../store/ui-slice";
@@ -15,6 +22,9 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 const SimpleSnackBar = () => {
+  const matches = useMediaQuery("(max-width:768px)");
+  const snackBarMatches = useMediaQuery("(max-width:400px)");
+
   const snackBarDetails = useSelector((state) => state.ui.snackBar);
   const dispatch = useDispatch();
 
@@ -45,12 +55,13 @@ const SimpleSnackBar = () => {
       {snackBarDetails.text && (
         <Button
           color="primary"
-          size="small"
+          // size="small"
           onClick={roomChangeHandler.bind(
             null,
             snackBarDetails.room,
             snackBarDetails.user
           )}
+          sx={{ fontSize: !matches ? "1.1rem" : "0.7rem" }}
         >
           Open
         </Button>
@@ -60,8 +71,9 @@ const SimpleSnackBar = () => {
         aria-label="close"
         color="inherit"
         onClick={handleClose}
+        sx={{ fontSize: !matches ? "1rem" : "0.8rem" }}
       >
-        <CloseIcon fontSize="small" />
+        <CloseIcon sx={{ fontSize: !matches ? "1rem" : "0.9rem" }} />
       </IconButton>
     </React.Fragment>
   );
@@ -75,7 +87,7 @@ const SimpleSnackBar = () => {
             vertical: "top",
             horizontal: "right",
           }}
-          autoHideDuration={6000}
+          autoHideDuration={60000}
           TransitionComponent={TransitionLeft}
           key="transitionLeft"
           sx={{ display: "flex", alignItems: "center" }}
@@ -84,18 +96,27 @@ const SimpleSnackBar = () => {
             onClose={handleClose}
             severity={snackBarDetails.severity}
             sx={{
-              width: "100%",
-              padding: "0.5rem 1.2rem",
-              fontSize: "1.1rem",
-              letterSpacing: "1px",
+              width: !snackBarMatches ? "auto" : "100%",
+              padding: !matches ? "0.5rem 1.2rem" : " 0.2rem 0.9rem",
               display: "flex",
               alignItems: "center",
+              "& .MuiSvgIcon-root": {
+                fontSize: !matches ? "1.3rem" : "0.9rem", // Adjust the size of the icon
+                alignSlef: "flex-start",
+                marginBottom: "3px",
+              },
+              "& .MuiAlert-icon": {
+                fontSize: !matches ? "1.3rem" : "0.9rem", // Adjust the size of the icon
+                marginBottom: "-3px",
+              },
             }}
           >
             <Typography
               sx={{
-                fontSize: "1.1rem",
-                letterSpacing: "1px",
+                fontSize: !matches ? "1.1rem" : "0.8rem",
+
+                letterSpacing: !matches ? "1px" : "0.5px",
+
                 color: "whitesmoke",
               }}
             >
@@ -111,18 +132,24 @@ const SimpleSnackBar = () => {
             vertical: "top",
             horizontal: "right",
           }}
-          autoHideDuration={6000}
+          autoHideDuration={60000}
           TransitionComponent={TransitionLeft}
           key="transitionLeft"
           action={action}
           sx={{ padding: "0rem" }}
           message={
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: !matches ? "3px" : "2px",
+              }}
+            >
               <Typography
                 sx={{
-                  letterSpacing: "1.5px",
+                  letterSpacing: !matches ? "1.5px" : "0.5px",
                   textTransform: "capitalize",
-                  fontSize: "1.1rem",
+                  fontSize: !matches ? "1.1rem" : "0.8rem",
                   color: "rgb(200,200, 200)",
                 }}
               >
@@ -133,8 +160,9 @@ const SimpleSnackBar = () => {
               />
               <Typography
                 sx={{
-                  letterSpacing: "1px",
+                  letterSpacing: !matches ? "1px" : "0.5px",
                   color: "rgb(120, 120, 120)",
+                  fontSize: !matches ? "1.1rem" : "0.8rem",
                 }}
               >
                 {snackBarDetails.text || snackBarDetails.info}

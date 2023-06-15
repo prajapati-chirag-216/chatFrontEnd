@@ -1,6 +1,7 @@
 .container-div {
     width: 100vw;
     height: 100vh;
+    /* min-height: -webkit-fill-available; */
     display: flex;
     overflow-y: hidden;
     background-color: #242a2e;

@@ -25,14 +25,15 @@ import store from "../../store/index";
 import { userActions } from "../../store/user-slice";
 import { nameReducer, roomReducer } from "../../reducers/inputReducer";
 import { createInterest, fetchInterests } from "../../lib/api";
-import Notification from "../Ui/Notification";
+import { uiActions } from "../../store/ui-slice";
+import { useDispatch } from "react-redux";
 
 const AddToRoomForm = () => {
   const [page, setPage] = useState("join");
   const nameInputRef = useRef();
   const roomInputRef = useRef();
   const [formIsValid, setFormIsValid] = useState(false);
-  const [showNotification, setShowNotification] = useState(false);
+  const dispatch = useDispatch();
   const matches = useMediaQuery("(max-width:768px)");
 
   const loaderData = useLoaderData();
@@ -85,21 +86,17 @@ const AddToRoomForm = () => {
   useEffect(() => {
     if (actionData?.response?.status === 403) {
       document.getElementById("room").focus();
-      setShowNotification(true);
-      const timer = setTimeout(() => {
-        setShowNotification(false);
-      }, 4000);
-      return () => clearTimeout(timer);
+      dispatch(
+        uiActions.setSnackBar({
+          status: true,
+          severity: "error",
+          text: actionData.response?.data?.message || "Invalid details",
+        })
+      );
     }
   }, [actionData]);
   return (
     <Container maxWidth={!matches ? "sm" : "xs"}>
-      {showNotification && (
-        <Notification
-          status="invalid"
-          message={actionData.response?.data?.message}
-        />
-      )}
       <Form className={classes["action-div"]} method="POST" action="/dashbord">
         <div className={classes["input-div"]}>
           <TextField
