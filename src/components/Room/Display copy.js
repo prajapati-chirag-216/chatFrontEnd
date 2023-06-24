@@ -14,122 +14,27 @@ import classes from "./Display.module.css";
 import SimpleModal from "../Ui/SimpleModal";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 
-const buttonStyle = {
-  transition: "all 200ms",
-  backgroundColor: "rgba(125, 118, 118, 0.3)",
-  // padding: !matches ? "auto" : "2px 0px",
-  width: "100%",
-  height: "100%",
-  borderRadius: "50%",
-};
-
 const Display = (props) => {
   const matches = useMediaQuery("(max-width:768px)");
 
   const messagesLength = props.messages.length;
   const [isOpen, setIsOpen] = useState(false);
-  const [imagesToShow, setImagesToShow] = useState([]);
+  const [imagesToShow, setImagesToShow] = useState(null);
   const openModalHandler = () => setIsOpen(true);
   const closeModalHandler = () => setIsOpen(false);
-  const changeImagesToShowHandler = (data) => {
-    setImagesToShow(data || []);
-  };
+  const changeImagesToShowHandler = (data) => setImagesToShow(data);
 
   return (
     <ScrollToBottom className={classes["scroller"]}>
       <SimpleModal
-        onOpen={imagesToShow.length > 0}
-        onClose={changeImagesToShowHandler.bind(null, [])}
+        onOpen={imagesToShow !== null}
+        onClose={changeImagesToShowHandler}
       >
-        <Box
-          sx={{
-            Display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
-          }}
-        >
-          <Typography
-            align="center"
-            sx={{
-              fontSize: !matches ? "1.5rem" : "1rem",
-              textTransform: "uppercase",
-              letterSpacing: !matches ? "1px" : "0.5px",
-              color: "rgb(100,100,100)",
-              marginBottom: "0.5rem",
-            }}
-          >
-            Gallary
-          </Typography>
-          <Box
-            sx={{
-              Display: "flex",
-              flexDirection: "column",
-              overflowY: "scroll",
-              maxHeight: "40rem",
-              textAlign: "center",
-              backgroundColor: "rgb(200,200,200)",
-            }}
-          >
-            {imagesToShow?.map((file) => {
-              const url = `data:${file.type};base64,${file.file}`;
-              return (
-                <div className={classes["modal-img-container"]}>
-                  <img
-                    key={file.createdAt}
-                    src={url}
-                    className={classes["modal-img"]}
-                    id="i1"
-                    alt=""
-                  />
-                  <a
-                    // href={url}
-                    download={file.name}
-                    className={classes["img-download-btn"]}
-                  >
-                    <Button
-                      className="btn"
-                      variant="contained"
-                      sx={
-                        !matches
-                          ? {
-                              ...buttonStyle,
-                              "&:hover": {
-                                backgroundColor: "#4e5451",
-                              },
-                              "&:hover > svg": {
-                                color: "white",
-                              },
-                              "&:active": {
-                                backgroundColor: "#4e5451",
-                                transform: "scale(0.95)",
-                              },
-                            }
-                          : {
-                              ...buttonStyle,
-                              "&:hover": {
-                                backgroundColor: "rgba(125, 118, 118, 0.3)",
-                              },
-                              "&:active": {
-                                transform: "scale(0.9)",
-                              },
-                            }
-                      }
-                    >
-                      <DownloadOutlinedIcon
-                        id="download-icon"
-                        fontSize="large"
-                        sx={{
-                          fontSize: !matches ? "auto" : "1.5rem",
-                          color: "gray",
-                        }}
-                      />
-                    </Button>
-                  </a>
-                </div>
-              );
-            })}
-          </Box>
-        </Box>
+        <object type="application/pdf" data={url + "#toolbar=0"}>
+          <p className="centered">
+            Unable to load File.Make sure network conectivity is good.
+          </p>
+        </object>
       </SimpleModal>
       <div className={classes["display-div"]}>
         <Typography
@@ -137,7 +42,7 @@ const Display = (props) => {
             fontSize: !matches ? "1.1rem" : "0.8rem",
             backgroundColor: "rgba(70,70,70,0.45)",
             margin: !matches
-              ? "1rem 3rem 0.5rem 3rem"
+              ? "1rem 3rem 1.5rem 3rem"
               : "0.5rem 1rem 0.8rem 1rem",
             padding: !matches ? "0.5rem 1rem" : "0.7rem",
             borderRadius: "10px",
@@ -193,19 +98,20 @@ const Display = (props) => {
                     <Grid
                       container
                       spacing={1}
-                      maxHeight={
-                        !personalUI
-                          ? !matches
-                            ? "32.6"
-                            : "20rem"
-                          : !matches
-                          ? "31.6rem"
-                          : "27rem"
-                      }
+                      // maxHeight={
+                      //   !personalUI
+                      //     ? !matches
+                      //       ? "33rem"
+                      //       : "28rem"
+                      //     : !matches
+                      //     ? "32rem"
+                      //     : "27rem"
+                      // }
                       // maxWidth={!matches ? "24.5rem" : "15.5rem"}
-                      // maxHeight={!personalUI ? "32.6" : "31.6rem"}
-                      maxWidth={!matches ? "31.6rem" : "17.4rem"}
+                      maxHeight={!personalUI ? "32.6" : "31.6rem"}
+                      maxWidth="31.6rem"
                       sx={{
+                        width: "fit-content",
                         padding: !personalUI
                           ? !matches
                             ? "1.5rem 0.2rem 0.15rem 0.3rem"
@@ -242,16 +148,15 @@ const Display = (props) => {
                             >
                               {file.type.startsWith("image") && (
                                 <Fragment>
-                                  <div
-                                    className={classes["img-container"]}
-                                    onClick={changeImagesToShowHandler.bind(
-                                      null,
-                                      data.files
-                                    )}
+                                  <Box
+                                    sx={{
+                                      background: "pink",
+                                      height: "15rem",
+                                      width: "15rem",
+                                      borderRadius: "10px",
+                                      position: "relative",
+                                    }}
                                   >
-                                    {data.files.length > 4 && index == 3 && (
-                                      <div className={classes["img-overlay"]} />
-                                    )}
                                     <img
                                       src={url}
                                       className={classes["img-msg"]}
@@ -259,26 +164,59 @@ const Display = (props) => {
                                       alt=""
                                     />
                                     {data.files.length > 4 && index == 3 && (
-                                      <Fragment>
-                                        <Typography
-                                          align="center"
-                                          sx={{
-                                            position: "absolute",
-                                            top: "50%",
-                                            left: "50%",
-                                            transform: "translate(-50%, -50%)",
-                                            color: "whitesmoke",
-                                            fontSize: !matches
-                                              ? "4rem"
-                                              : "2.5rem",
-                                            fontWeight: !matches ? "10" : "360",
-                                          }}
-                                        >
-                                          +{data.files.length - 4}
-                                        </Typography>
-                                      </Fragment>
+                                      <Typography
+                                        align="center"
+                                        sx={{
+                                          position: "absolute",
+                                          top: "4rem",
+                                          right: 0,
+                                          left: 0,
+                                          color: "whitesmoke",
+                                          fontSize: "4rem",
+                                          fontWeight: "10",
+                                          textShadow: "2px 2px 10px black",
+                                        }}
+                                        onClick={openImagesHandler}
+                                      >
+                                        +{data.files.length - 4}
+                                      </Typography>
                                     )}
-                                  </div>
+                                  </Box>
+                                  {!personalUI && (
+                                    <a
+                                      href={url}
+                                      download={file.name}
+                                      className={classes["download-btn"]}
+                                    >
+                                      <Button
+                                        variant="contained"
+                                        sx={{
+                                          transition: "all 200ms",
+                                          backgroundColor:
+                                            "rgba(125, 118, 118, 0.95)",
+                                          "&:hover": {
+                                            backgroundColor: "#4e5451",
+                                          },
+                                          "&:active": {
+                                            transform: "scale(0.9)",
+                                          },
+                                          padding: !matches
+                                            ? "auto"
+                                            : "2px 0px",
+                                          minWidth: !matches ? "65px" : "40px",
+                                        }}
+                                      >
+                                        <DownloadOutlinedIcon
+                                          fontSize="small"
+                                          sx={{
+                                            fontSize: !matches
+                                              ? "auto"
+                                              : "0.9rem",
+                                          }}
+                                        />
+                                      </Button>
+                                    </a>
+                                  )}
                                 </Fragment>
                               )}
                               {file.type == "application/pdf" && (

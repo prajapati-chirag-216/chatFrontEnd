@@ -31,6 +31,7 @@ const SimpleModal = (props) => {
           width: matches ? "20rem" : style.width,
           padding: matches ? "0.8rem" : style.padding,
           userSelect: "none",
+          gap: "1rem",
         }}
       >
         <CancelIcon

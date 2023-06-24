@@ -138,7 +138,7 @@ const FileInput = (props) => {
                       File
                       <input
                         type="file"
-                        accept=".pdf, .png, .jpeg, .jpg"
+                        accept=".pdf"
                         multiple
                         style={{ display: "none" }}
                         ref={fileInputRef}

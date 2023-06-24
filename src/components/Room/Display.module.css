@@ -11,12 +11,12 @@
 }
 
 .display-div {
-    /* height: 96%; */
     padding: 1rem;
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
     color: rgb(199, 199, 199);
+    user-select: none;
 }
 
 .text-div {
@@ -25,6 +25,7 @@
     display: flex;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     position: relative;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.429);
 }
 
 .personal-box {
@@ -49,10 +50,12 @@
 }
 
 .new_personal-box {
+    margin-top: 0.5rem;
     border-radius: 10px 0px 10px 10px;
 }
 
 .new_others-box {
+    margin-top: 0.5rem;
     border-radius: 0px 10px 10px 10px;
 }
 
@@ -87,19 +90,6 @@
     color: gray;
     font-weight: bold;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-
-.img-msg {
-    max-width: 11rem;
-    border-radius: 5px;
-}
-
-.download-btn {
-    display: none;
-    position: absolute;
-    top: 5px;
-    right: -4px;
-    margin: 10px;
 }
 
 .pdf-msg-container {
@@ -141,50 +131,67 @@
     margin-bottom: 1rem;
 }
 
+.modal-img {
+    width: 70%;
+}
+
+.img-container {
+    height: 15rem;
+    width: 15rem;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.img-msg {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.img-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.423);
+    border-radius: 5px;
+}
+
+.modal-img-container {
+    position: relative;
+}
+
+.img-download-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2rem;
+    height: 4rem;
+}
 
 @media (max-width:768px) {
     .scroller {
-        background: url('../../assests/wallpaper.png');
         background-size: 70%;
-
     }
 
     .display-div {
         padding: 0.5rem;
         gap: 0.2rem;
-        /* max-height: 96%; */
     }
 
     .text-div>div>span {
-        font-size: 0.6rem;
+        font-size: 0.7rem;
         padding: 0rem 0.3rem;
     }
 
     .text-div {
-        padding: 0.3rem 0.2rem;
+        padding: 0.4rem 0.3rem;
     }
 
     .time-span {
         font-size: 0.55rem;
-    }
-
-    .personal-box {
-        border-radius: 5px;
-    }
-
-    .others-box {
-        float: left;
-        background-color: #33393d;
-        border-radius: 5px;
-    }
-
-
-    .new_personal-box {
-        border-radius: 5px 0px 5px 5px;
-    }
-
-    .new_others-box {
-        border-radius: 0px 5px 5px 5px;
     }
 
     .new_personal-box::before {
@@ -197,31 +204,26 @@
         border-left: 6px solid transparent;
     }
 
-    .img-msg {
-        max-width: 7rem;
-    }
-
     .pdf-msg-container {
         min-width: 14.4rem;
-        border-radius: 5px;
         padding: 0.35rem;
         gap: 0.35rem;
     }
 
     .pdf-container object {
         height: 30rem;
-        align-self: center;
     }
 
     .last-message {
         margin-bottom: 0.5rem;
     }
 
-    .download-btn {
-        display: none;
-        position: absolute;
-        top: -2px;
-        right: -6px;
-        margin: 8px;
+    .img-container {
+        height: 8rem;
+        width: 8rem;
+    }
+
+    .img-download-btn {
+        left: 46%;
     }
 }

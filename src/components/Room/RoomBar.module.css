@@ -13,9 +13,9 @@
 .open_roombar-slider {
     position: absolute;
     transition: all 500ms;
-    height: 99.8vh;
+    height: 100vh;
     overflow: hidden;
-    z-index: 100;
+    z-index: 100
 }
 
 .close_roombar-slider {
@@ -124,7 +124,8 @@
 }
 
 ::-webkit-scrollbar-track {
-    background: #242a2e;
+    background-color: transparent;
+    /* background: #242a2e; */
 }
 
 ::-webkit-scrollbar-thumb {
@@ -173,9 +174,6 @@
     .header-div {
         padding: 1rem 0.6rem;
         padding-left: 1.4rem;
-        display: flex;
-        justify-content: space-between;
-        z-index: 10;
     }
 
     .user-div {

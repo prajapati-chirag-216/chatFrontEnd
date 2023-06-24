@@ -140,11 +140,11 @@ const AddToRoomForm = () => {
                       flex: !matches ? "2" : "3",
                       "& .MuiInputBase-root": {
                         fontSize: !matches ? "16px" : "12px", // Adjust the font size to change the size of the selector
-                        padding: !matches ? "8px" : "4px", // Adjust the padding to resize the selector
+                        padding: !matches ? "8px" : "2px", // Adjust the padding to resize the selector
                       },
                       "& .MuiAutocomplete-listbox": {
                         fontSize: "10px", // Adjust the font size of the options
-                        padding: "1px", // Adjust the padding to resize the options
+                        padding: "0px", // Adjust the padding to resize the options
                       },
                       "& .MuiAutocomplete-clearIndicator": {
                         scale: "80%",
@@ -158,7 +158,7 @@ const AddToRoomForm = () => {
                       sx: {
                         fontSize: !matches ? "16px" : "11px",
                         letterSpacing: !matches ? "1px" : "0.5px",
-                        padding: "0px",
+                        padding: !matches ? "8px" : "0px",
                       },
                     }}
                     size={!matches ? "medium" : "small"}

@@ -12,14 +12,18 @@ const ChatRoom = () => {
   const activeUser = useSelector((state) => state.user.activeUser);
   const [isPrivate, setIsPrivate] = useState(false);
   const userDetails = useSelector((state) => state.user.userDetails);
-  const changeManuStateHandler = () => setShowManu((prevState) => !prevState);
+  const changeRoomBarStateHandler = () =>
+    setShowManu((prevState) => !prevState);
+  const closeRoomBarHandler = () => setShowManu(false);
 
   const privateRoomHandler = (userData, privateRoom) => {
     dispatch(userActions.setActiveUser(userData));
     setIsPrivate(true);
     dispatch(uiActions.setCurruntRoom(privateRoom));
+    closeRoomBarHandler();
   };
   const openRoomHandler = (data) => {
+    closeRoomBarHandler();
     if (data.id === "GROUPID") {
       dispatch(userActions.setActiveUser(null));
       dispatch(uiActions.setCurruntRoom(null));
@@ -37,7 +41,7 @@ const ChatRoom = () => {
     <div className={classes["container-div"]}>
       <RoomBar
         isOpen={showManu}
-        onClick={changeManuStateHandler}
+        onClick={changeRoomBarStateHandler}
         onJoinToPrivateRoom={privateRoomHandler}
         onChangeRoom={openRoomHandler}
         onChangeToPublic={changeToPublicHandler}
@@ -45,7 +49,7 @@ const ChatRoom = () => {
       />
       <Chat
         privateUser={activeUser}
-        onMenuClicked={changeManuStateHandler}
+        onMenuClicked={changeRoomBarStateHandler}
         isPrivate={isPrivate}
         onChangeToPublic={changeToPublicHandler}
       />
