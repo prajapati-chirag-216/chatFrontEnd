@@ -7,7 +7,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  minWidth: "20rem",
+  minWidth: "30vw",
   bgcolor: "background.paper",
   boxShadow: 24,
   borderRadius: "10px",
@@ -28,7 +28,8 @@ const SimpleModal = (props) => {
       <Box
         sx={{
           ...style,
-          width: matches ? "20rem" : style.width,
+          width: matches ? "80vw" : style.width,
+          height: matches ? "80vh" : "auto",
           padding: matches ? "0.8rem" : style.padding,
           userSelect: "none",
           gap: "1rem",

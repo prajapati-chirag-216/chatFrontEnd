@@ -12,7 +12,7 @@ import InsertPhotoOutlinedIcon from "@mui/icons-material/InsertPhotoOutlined";
 import VideoCameraBackOutlinedIcon from "@mui/icons-material/VideoCameraBackOutlined";
 import FmdGoodOutlinedIcon from "@mui/icons-material/FmdGoodOutlined";
 import { useMediaQuery } from "@mui/material";
-import classes from "./FileInput.module.css";
+import classes from "./InputOptions.module.css";
 
 const MenuStyle = {
   borderRadius: "4px",
@@ -21,7 +21,7 @@ const MenuStyle = {
   },
 };
 
-const FileInput = (props) => {
+const InputOptions = (props) => {
   const matches = useMediaQuery("(max-width:768px)");
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
@@ -42,6 +42,10 @@ const FileInput = (props) => {
   };
   const handleFileInputClick = () => {
     fileInputRef.current.click();
+  };
+  const handleLocationInputClick = () => {
+    props.onSendLocation();
+    setOpen(false);
   };
 
   const handleInputChange = (event) => {
@@ -171,24 +175,7 @@ const FileInput = (props) => {
                       />
                     </MenuItem>
                     <MenuItem
-                      onClick={handleClose}
-                      sx={{
-                        ...MenuStyle,
-                        fontSize: !matches ? "1.1rem" : "0.8rem",
-                        minHeight: !matches ? "36px" : "20px",
-                      }}
-                    >
-                      <VideoCameraBackOutlinedIcon
-                        sx={{
-                          marginRight: "5px",
-                          fontSize: !matches ? "1.1rem" : "0.8rem",
-                          letterSpacing: !matches ? "1px" : "0.5px",
-                        }}
-                      />
-                      Video
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleClose}
+                      onClick={handleLocationInputClick}
                       sx={{
                         ...MenuStyle,
                         fontSize: !matches ? "1.1rem" : "0.8rem",
@@ -214,4 +201,4 @@ const FileInput = (props) => {
     </Stack>
   );
 };
-export default FileInput;
+export default InputOptions;

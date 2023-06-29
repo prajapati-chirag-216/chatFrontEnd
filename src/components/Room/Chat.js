@@ -9,8 +9,8 @@ import Header from "./Header";
 import { messageActions } from "../../store/message-slice";
 import { uiActions } from "../../store/ui-slice";
 import { useNavigate } from "react-router-dom";
-// const ENDPOINT = "http://localhost:8000";
-const ENDPOINT = "https://chatbackend-production-3e35.up.railway.app";
+const ENDPOINT = "http://localhost:8000";
+// const ENDPOINT = "https://chatbackend-production-3e35.up.railway.app";
 
 let socket;
 
@@ -55,10 +55,37 @@ const Chat = (props) => {
       };
       fileDetails.push(data);
     }
-    socket.emit("send_Files", fileDetails, (error) => {
-      if (error) {
-        throw error;
+    socket.emit(
+      "send_Files",
+      { files: fileDetails, privateRoom: currentRoom },
+      (error) => {
+        if (error) {
+          throw error;
+        }
       }
+    );
+  };
+  const sendLocationHandler = () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser");
+    }
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      socket.emit(
+        "send_location",
+        {
+          coords: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          },
+          privateRoom: currentRoom,
+        },
+        (error) => {
+          if (error) {
+            throw error;
+          }
+        }
+      );
     });
   };
 
@@ -121,12 +148,15 @@ const Chat = (props) => {
         name: data.name,
         message: data.message,
         files: data.files,
+        url: data.url,
         createdAt: data.createdAt,
         id: data.id,
       };
+      console.log("user -> ", user);
       dispatch(messageActions.setMessages(user));
     });
     socket.on("recive_private_message", (data) => {
+      console.log("data ", data);
       if (data.privateRoom !== currentRoom) {
         const isText =
           userDetails?.privateRoom && userDetails.privateRoom[data.id];
@@ -145,6 +175,7 @@ const Chat = (props) => {
         name: data.name,
         message: data.message,
         files: data.files,
+        url: data.url,
         createdAt: data.createdAt,
         id: data.id,
       };
@@ -288,6 +319,7 @@ const Chat = (props) => {
           !currentRoom ? sendMessageHandler : sendPrivateMessageHandler
         }
         onSendFiles={sendFilesHandler}
+        onSendLocation={sendLocationHandler}
       />
     </div>
   );

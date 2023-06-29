@@ -1,6 +1,6 @@
 import axios from "axios";
-// const BACKEND_DOMAIN = "http://localhost:8000";
-const BACKEND_DOMAIN = "https://chatbackend-production-3e35.up.railway.app";
+const BACKEND_DOMAIN = "http://localhost:8000";
+// const BACKEND_DOMAIN = "https://chatbackend-production-3e35.up.railway.app";
 
 export const fetchInterests = async () => {
   const res = await axios(`${BACKEND_DOMAIN}/interests`);

@@ -27,10 +27,14 @@ const Display = (props) => {
   const matches = useMediaQuery("(max-width:768px)");
 
   const messagesLength = props.messages.length;
-  const [isOpen, setIsOpen] = useState(false);
+  const [pdfToShow, setPdfToShow] = useState(null);
   const [imagesToShow, setImagesToShow] = useState([]);
-  const openModalHandler = () => setIsOpen(true);
-  const closeModalHandler = () => setIsOpen(false);
+  const openModalHandler = (file) => {
+    setPdfToShow(file);
+  };
+  const closeModalHandler = () => {
+    setPdfToShow(null);
+  };
   const changeImagesToShowHandler = (data) => {
     setImagesToShow(data || []);
   };
@@ -70,10 +74,10 @@ const Display = (props) => {
               backgroundColor: "rgb(200,200,200)",
             }}
           >
-            {imagesToShow?.map((file) => {
+            {imagesToShow?.map((file, index) => {
               const url = `data:${file.type};base64,${file.file}`;
               return (
-                <div className={classes["modal-img-container"]}>
+                <div className={classes["modal-img-container"]} key={index}>
                   <img
                     key={file.createdAt}
                     src={url}
@@ -82,7 +86,7 @@ const Display = (props) => {
                     alt=""
                   />
                   <a
-                    // href={url}
+                    href={url}
                     download={file.name}
                     className={classes["img-download-btn"]}
                   >
@@ -131,6 +135,32 @@ const Display = (props) => {
           </Box>
         </Box>
       </SimpleModal>
+      <SimpleModal onOpen={pdfToShow} onClose={closeModalHandler}>
+        {pdfToShow && (
+          <div className={classes["pdf-container"]}>
+            <Typography
+              align="center"
+              sx={{
+                fontSize: !matches ? "1.5rem" : "1rem",
+                textTransform: "uppercase",
+                letterSpacing: !matches ? "1px" : "0.5px",
+              }}
+            >
+              {pdfToShow.name}
+            </Typography>
+            <Divider
+              sx={{
+                backgroundColor: "rgb(250,250,250)",
+              }}
+            />
+            <object type="application/pdf" data={pdfToShow.url + "#toolbar=0"}>
+              <p className="centered">
+                Unable to load File.Make sure network conectivity is good.
+              </p>
+            </object>
+          </div>
+        )}
+      </SimpleModal>
       <div className={classes["display-div"]}>
         <Typography
           sx={{
@@ -170,6 +200,42 @@ const Display = (props) => {
               <div className={classNames} key={data.createdAt}>
                 <div>
                   {!personalUI && <span>{data.name}</span>}
+                  {data.url && (
+                    <Box
+                      sx={{
+                        width: !matches ? "22rem" : "12rem",
+                        margin: !personalUI
+                          ? !matches
+                            ? "1.5rem 0.3rem 0rem 0.3rem"
+                            : "1rem 0.15rem 0rem 0.15rem"
+                          : !matches
+                          ? "0.2rem 0.2rem 0rem 0.2rem"
+                          : "0.1rem 0.1rem 0rem 0.1rem",
+                        display: "flex",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <a href={data.url} target="_blank">
+                        <img
+                          src="map.jpeg"
+                          className={classes["img-msg"]}
+                          id="i1"
+                          alt=""
+                        />
+                      </a>
+                      <Typography
+                        align="center"
+                        letterSpacing={!matches ? "1px" : "0.2px"}
+                        style={{
+                          fontSize: !matches ? "1rem" : "0.7rem",
+                          fontFamily:
+                            "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+                        }}
+                      >
+                        {personalUI ? "Your" : "My"} current location
+                      </Typography>
+                    </Box>
+                  )}
                   {data.message && (
                     <Typography
                       letterSpacing={!matches ? "1px" : "0.5px"}
@@ -202,8 +268,6 @@ const Display = (props) => {
                           ? "31.6rem"
                           : "27rem"
                       }
-                      // maxWidth={!matches ? "24.5rem" : "15.5rem"}
-                      // maxHeight={!personalUI ? "32.6" : "31.6rem"}
                       maxWidth={!matches ? "31.6rem" : "17.4rem"}
                       sx={{
                         padding: !personalUI
@@ -213,7 +277,6 @@ const Display = (props) => {
                           : !matches
                           ? "0.2rem 0.2rem 0.15rem 0.3rem"
                           : "0.1rem 0.1rem 0rem 0.2rem",
-                        // overflow: data.files.length > 2 ? "scroll" : "",
                         overflow: "hidden",
                         userSelect: "none",
                       }}
@@ -233,6 +296,10 @@ const Display = (props) => {
                               }
                               key={index}
                               sx={{
+                                width:
+                                  file.type == "application/pdf"
+                                    ? "100%"
+                                    : "auto",
                                 position: "relative",
                                 transition: "all 200ms",
                                 "&:hover a": {
@@ -282,73 +349,74 @@ const Display = (props) => {
                                 </Fragment>
                               )}
                               {file.type == "application/pdf" && (
-                                <Fragment>
-                                  <SimpleModal
-                                    onOpen={isOpen}
-                                    onClose={closeModalHandler}
+                                <div className={classes["pdf-msg-container"]}>
+                                  <div
+                                    className={classes["pdf-name-container"]}
                                   >
-                                    <div className={classes["pdf-container"]}>
-                                      <Typography
-                                        align="center"
-                                        sx={{
-                                          fontSize: !matches
-                                            ? "1.5rem"
-                                            : "1rem",
-                                          textTransform: "uppercase",
-                                          letterSpacing: !matches
-                                            ? "1px"
-                                            : "0.5px",
-                                        }}
-                                      >
-                                        {file.name}
-                                      </Typography>
-                                      <Divider
-                                        sx={{
-                                          backgroundColor: "rgb(250,250,250)",
-                                        }}
-                                      />
-                                      <object
-                                        type="application/pdf"
-                                        data={url + "#toolbar=0"}
-                                      >
-                                        <p className="centered">
-                                          Unable to load File.Make sure network
-                                          conectivity is good.
-                                        </p>
-                                      </object>
-                                    </div>
-                                  </SimpleModal>
-
-                                  <div className={classes["pdf-msg-container"]}>
-                                    <div
-                                      className={classes["pdf-name-container"]}
+                                    <PictureAsPdfIcon
+                                      sx={{
+                                        fontSize: !matches
+                                          ? "1.5rem"
+                                          : "0.9rem",
+                                      }}
+                                    />
+                                    <Typography
+                                      align="center"
+                                      sx={{
+                                        fontSize: !matches
+                                          ? "1.2rem"
+                                          : "0.8rem",
+                                        textTransform: "uppercase",
+                                      }}
                                     >
-                                      <PictureAsPdfIcon
-                                        sx={{
-                                          fontSize: !matches
-                                            ? "1.5rem"
-                                            : "0.9rem",
-                                        }}
-                                      />
-                                      <Typography
-                                        align="center"
-                                        sx={{
-                                          fontSize: !matches
-                                            ? "1.2rem"
-                                            : "0.8rem",
-                                          textTransform: "uppercase",
-                                        }}
-                                      >
-                                        {file.name}
-                                      </Typography>
-                                    </div>
-                                    <Divider />
-                                    <div
-                                      className={classes["pdf-btns-container"]}
+                                      {file.name.length > 20
+                                        ? `${file.name.slice(
+                                            0,
+                                            12
+                                          )}..${file.name.slice(
+                                            file.name.length - 8,
+                                            file.name.length - 4
+                                          )}.pdf`
+                                        : file.name}
+                                    </Typography>
+                                  </div>
+                                  <Divider />
+                                  <div
+                                    className={classes["pdf-btns-container"]}
+                                  >
+                                    <Button
+                                      variant="contained"
+                                      sx={{
+                                        transition: "all 200ms",
+                                        backgroundColor:
+                                          "rgba(125, 118, 118, 0.4)",
+                                        "&:hover": {
+                                          backgroundColor:
+                                            "rgba(120, 120, 120, 0.7)",
+                                        },
+                                        "&:active": {
+                                          transform: "scale(0.9)",
+                                        },
+                                        padding: !matches ? "0.5rem" : "0.2rem",
+                                        width: "100%",
+                                        fontSize: !matches ? "auto" : "0.7rem",
+                                      }}
+                                      onClick={openModalHandler.bind(null, {
+                                        name: file.name,
+                                        url,
+                                      })}
+                                    >
+                                      Open
+                                    </Button>
+                                    <a
+                                      href={url}
+                                      download={file.name}
+                                      style={{ flex: "100%" }}
                                     >
                                       <Button
                                         variant="contained"
                                         sx={{
+                                          width: "100%",
                                           transition: "all 200ms",
                                           backgroundColor:
                                             "rgba(125, 118, 118, 0.4)",
@@ -362,48 +430,16 @@ const Display = (props) => {
                                           padding: !matches
                                             ? "0.5rem"
                                             : "0.2rem",
-                                          width: "100%",
                                           fontSize: !matches
                                             ? "auto"
                                             : "0.7rem",
                                         }}
-                                        onClick={openModalHandler}
                                       >
-                                        Open
+                                        DownLoad
                                       </Button>
-                                      <a
-                                        href={url}
-                                        download={file.name}
-                                        style={{ flex: "100%" }}
-                                      >
-                                        <Button
-                                          variant="contained"
-                                          sx={{
-                                            width: "100%",
-                                            transition: "all 200ms",
-                                            backgroundColor:
-                                              "rgba(125, 118, 118, 0.4)",
-                                            "&:hover": {
-                                              backgroundColor:
-                                                "rgba(120, 120, 120, 0.7)",
-                                            },
-                                            "&:active": {
-                                              transform: "scale(0.9)",
-                                            },
-                                            padding: !matches
-                                              ? "0.5rem"
-                                              : "0.2rem",
-                                            fontSize: !matches
-                                              ? "auto"
-                                              : "0.7rem",
-                                          }}
-                                        >
-                                          DownLoad
-                                        </Button>
-                                      </a>
-                                    </div>
+                                    </a>
                                   </div>
-                                </Fragment>
+                                </div>
                               )}
                             </Grid>
                           );

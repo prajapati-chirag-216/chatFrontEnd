@@ -94,7 +94,8 @@
 
 .pdf-msg-container {
     min-width: 22.4rem;
-    max-width: 96%;
+    max-width: 96.2%;
+    /* width: 100%; */
     background-color: rgba(111, 111, 111, 0.6);
     border-radius: 5px;
     display: flex;
@@ -113,18 +114,19 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    height: 80vh;
 }
 
 .pdf-container object {
-    width: 30rem;
-    height: 40rem;
+    width: 100%;
+    height: 100%;
     align-self: center;
 }
 
 .pdf-name-container {
     display: flex;
     align-items: center;
-    gap: 0.7rem
+    gap: 0.7rem;
 }
 
 .last-message {
@@ -210,8 +212,14 @@
         gap: 0.35rem;
     }
 
+    .pdf-container {
+        width: 100%;
+        height: 100%;
+    }
+
     .pdf-container object {
-        height: 30rem;
+        width: 100%;
+        height: 100%;
     }
 
     .last-message {
@@ -225,5 +233,9 @@
 
     .img-download-btn {
         left: 46%;
+    }
+
+    .pdf-msg-container {
+        max-width: 96%;
     }
 }

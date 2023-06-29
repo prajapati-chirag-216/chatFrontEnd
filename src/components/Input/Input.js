@@ -1,8 +1,9 @@
 import React, { useRef } from "react";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
+import ShareLocationIcon from "@mui/icons-material/ShareLocation";
 import classes from "./Input.module.css";
-import FileInput from "./FileInput";
-import { useMediaQuery } from "@mui/material";
+import InputOptions from "./InputOptions";
+import { Button, useMediaQuery } from "@mui/material";
 
 const Input = (props) => {
   const matches = useMediaQuery("(max-width:768px)");
@@ -20,10 +21,16 @@ const Input = (props) => {
   const sendFilesHandler = (files) => {
     props.onSendFiles(files);
   };
+  const sendLocationHandler = (files) => {
+    props.onSendLocation(files);
+  };
 
   return (
     <div className={classes["input-div"]}>
-      <FileInput onSendFiles={sendFilesHandler} />
+      <InputOptions
+        onSendFiles={sendFilesHandler}
+        onSendLocation={sendLocationHandler}
+      />
       <input
         ref={inputRef}
         id="text-inp"
