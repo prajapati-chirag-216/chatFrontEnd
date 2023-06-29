@@ -9,8 +9,8 @@ import Header from "./Header";
 import { messageActions } from "../../store/message-slice";
 import { uiActions } from "../../store/ui-slice";
 import { useNavigate } from "react-router-dom";
-const ENDPOINT = "http://localhost:8000";
-// const ENDPOINT = "https://chatbackend-production-3e35.up.railway.app";
+// const ENDPOINT = "http://localhost:8000";
+const ENDPOINT = "https://chatbackend-production-3e35.up.railway.app";
 
 let socket;
 
