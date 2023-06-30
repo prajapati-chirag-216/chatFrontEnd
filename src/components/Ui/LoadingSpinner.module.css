@@ -1,0 +1,86 @@
+.spinner {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    margin: auto;
+}
+
+.spinner:after {
+    content: ' ';
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 6px;
+    border-radius: 50%;
+    border: 6px solid rgb(78, 138, 103);
+    border-color: rgb(78, 138, 103) transparent rgb(78, 138, 103) transparent;
+    animation: spinner 1.2s linear infinite;
+}
+
+.pdf-spinner {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    margin: auto;
+}
+
+.pdf-spinner:after {
+    content: ' ';
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 5px solid rgb(78, 138, 103);
+    border-color: rgb(78, 138, 103) transparent rgb(78, 138, 103) transparent;
+    animation: spinner 1.2s linear infinite;
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width:768px) {
+    .spinner {
+        width: 40px;
+        height: 20px;
+        margin: auto;
+    }
+
+    .spinner:after {
+        content: ' ';
+        display: block;
+        width: 32px;
+        height: 32px;
+        margin: 4px;
+        border-radius: 50%;
+        border: 3px solid rgb(78, 138, 103);
+        border-color: rgb(78, 138, 103) transparent rgb(78, 138, 103) transparent;
+        animation: spinner 1.2s linear infinite;
+    }
+
+    .pdf-spinner {
+        display: inline-block;
+        width: 30px;
+        height: 20px;
+        margin: auto;
+    }
+
+    .pdf-spinner:after {
+        content: ' ';
+        display: block;
+        width: 20px;
+        height: 20px;
+        margin: 5px;
+        border-radius: 50%;
+        border: 2px solid rgb(78, 138, 103);
+        border-color: rgb(78, 138, 103) transparent rgb(78, 138, 103) transparent;
+        animation: spinner 1.2s linear infinite;
+    }
+}

@@ -9,7 +9,9 @@ import Header from "./Header";
 import { messageActions } from "../../store/message-slice";
 import { uiActions } from "../../store/ui-slice";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 // const ENDPOINT = "http://localhost:8000";
+// const ENDPOINT = "http://192.168.0.106:8000";
 const ENDPOINT = "https://chatbackend-production-3e35.up.railway.app";
 
 let socket;
@@ -25,6 +27,7 @@ const Chat = (props) => {
   const roomUsers = useSelector((state) => state.user.users);
   const userDetails = useSelector((state) => state.user.userDetails);
   const currentRoom = useSelector((state) => state.ui.currentRoom);
+  const filesToLoad = useSelector((state) => state.ui.filesToLoad);
   const sendMessageHandler = (message) => {
     socket.emit("send_message", message, (error) => {
       if (error) {
@@ -46,18 +49,23 @@ const Chat = (props) => {
 
   const sendFilesHandler = (files) => {
     const fileDetails = [];
+    const filesToUpload = [];
+    const uploadedId = uuidv4();
     for (const file in files) {
       if (file === "length") break;
       const data = {
         file: files[file],
         type: files[file].type,
         name: files[file].name,
+        fileId: uuidv4(),
       };
       fileDetails.push(data);
+      filesToUpload.push({ name: data.name, fileId: data.fileId });
     }
+    dispatch(uiActions.setFileLoading({ [uploadedId]: filesToUpload }));
     socket.emit(
       "send_Files",
-      { files: fileDetails, privateRoom: currentRoom },
+      { files: fileDetails, privateRoom: currentRoom, uploadedId },
       (error) => {
         if (error) {
           throw error;
@@ -152,11 +160,14 @@ const Chat = (props) => {
         createdAt: data.createdAt,
         id: data.id,
       };
-      console.log("user -> ", user);
+      if (user.files) {
+        if (filesToLoad[data.uploadedId]) {
+          dispatch(uiActions.setRemoveLoading(data.uploadedId));
+        }
+      }
       dispatch(messageActions.setMessages(user));
     });
     socket.on("recive_private_message", (data) => {
-      console.log("data ", data);
       if (data.privateRoom !== currentRoom) {
         const isText =
           userDetails?.privateRoom && userDetails.privateRoom[data.id];
@@ -178,7 +189,13 @@ const Chat = (props) => {
         url: data.url,
         createdAt: data.createdAt,
         id: data.id,
+        uploadedId: data.uploadedId,
       };
+      if (user.files) {
+        if (filesToLoad[data.uploadedId]) {
+          dispatch(uiActions.setRemoveLoading(data.uploadedId));
+        }
+      }
       dispatch(
         messageActions.setPrivateMessages({
           room: data.privateRoom,
@@ -290,7 +307,14 @@ const Chat = (props) => {
       }
     });
     return () => socket.off();
-  }, [messages, privateMessages, isPrivate, currentRoom, roomUsers]);
+  }, [
+    messages,
+    privateMessages,
+    isPrivate,
+    currentRoom,
+    roomUsers,
+    filesToLoad,
+  ]);
 
   // ------------- Stop from Page Refrece ------------------------
   useEffect(() => {

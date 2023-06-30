@@ -9,6 +9,7 @@ const initialState = {
     severity: null,
   },
   currentRoom: null,
+  filesToLoad: {},
 };
 
 const uiSlice = createSlice({
@@ -20,6 +21,14 @@ const uiSlice = createSlice({
     },
     setCurruntRoom(state, action) {
       state.currentRoom = action.payload;
+    },
+    setFileLoading(state, action) {
+      state.filesToLoad = { ...state.filesToLoad, ...action.payload };
+    },
+    setRemoveLoading(state, action) {
+      const files = state.filesToLoad;
+      delete files[action.payload];
+      state.filesToLoad = files;
     },
   },
 });

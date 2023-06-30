@@ -13,6 +13,8 @@ import VideoCameraBackOutlinedIcon from "@mui/icons-material/VideoCameraBackOutl
 import FmdGoodOutlinedIcon from "@mui/icons-material/FmdGoodOutlined";
 import { useMediaQuery } from "@mui/material";
 import classes from "./InputOptions.module.css";
+import { useDispatch } from "react-redux";
+import { uiActions } from "../../store/ui-slice";
 
 const MenuStyle = {
   borderRadius: "4px",
@@ -27,6 +29,7 @@ const InputOptions = (props) => {
   const anchorRef = useRef(null);
   const imageInputRef = useRef();
   const fileInputRef = useRef();
+  const dispatch = useDispatch();
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -50,6 +53,54 @@ const InputOptions = (props) => {
 
   const handleInputChange = (event) => {
     const files = event.target.files;
+    if (files[0].type.startsWith("image")) {
+      if (files.length > 8) {
+        setOpen(false);
+        return dispatch(
+          uiActions.setSnackBar({
+            status: true,
+            severity: "warning",
+            text: "you can't upload more than 8 images",
+          })
+        );
+      }
+      for (const file in files) {
+        if (file === "length") break;
+        if (files[file].size > 500000) {
+          dispatch(
+            uiActions.setSnackBar({
+              status: true,
+              severity: "warning",
+              text: "file size is too large (upto 500kb)",
+            })
+          );
+        }
+      }
+    }
+    if (files[0].type.endsWith("pdf")) {
+      if (files.length > 4) {
+        setOpen(false);
+        return dispatch(
+          uiActions.setSnackBar({
+            status: true,
+            severity: "warning",
+            text: "you can't upload more than 4 files",
+          })
+        );
+      }
+      for (const file in files) {
+        if (file === "length") break;
+        if (files[file].size > 500000) {
+          return dispatch(
+            uiActions.setSnackBar({
+              status: true,
+              severity: "warning",
+              text: "file size is too large (upto 500kb)",
+            })
+          );
+        }
+      }
+    }
     props.onSendFiles(files);
     setOpen(false);
   };

@@ -1,8 +1,9 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import moment from "moment";
 import {
   Box,
   Button,
+  Container,
   Divider,
   Grid,
   Typography,
@@ -13,11 +14,12 @@ import ScrollToBottom from "react-scroll-to-bottom";
 import classes from "./Display.module.css";
 import SimpleModal from "../Ui/SimpleModal";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import { useSelector } from "react-redux";
+import LoadingSpinner from "../Ui/LoadingSpinner";
 
 const buttonStyle = {
   transition: "all 200ms",
   backgroundColor: "rgba(125, 118, 118, 0.3)",
-  // padding: !matches ? "auto" : "2px 0px",
   width: "100%",
   height: "100%",
   borderRadius: "50%",
@@ -25,10 +27,11 @@ const buttonStyle = {
 
 const Display = (props) => {
   const matches = useMediaQuery("(max-width:768px)");
-
+  // const file
   const messagesLength = props.messages.length;
   const [pdfToShow, setPdfToShow] = useState(null);
   const [imagesToShow, setImagesToShow] = useState([]);
+  const filesToLoad = useSelector((state) => state.ui.filesToLoad);
   const openModalHandler = (file) => {
     setPdfToShow(file);
   };
@@ -50,6 +53,7 @@ const Display = (props) => {
             Display: "flex",
             flexDirection: "column",
             gap: "1rem",
+            // maxHeight: "95%",
           }}
         >
           <Typography
@@ -135,7 +139,7 @@ const Display = (props) => {
           </Box>
         </Box>
       </SimpleModal>
-      <SimpleModal onOpen={pdfToShow} onClose={closeModalHandler}>
+      <SimpleModal onOpen={pdfToShow != null} onClose={closeModalHandler}>
         {pdfToShow && (
           <div className={classes["pdf-container"]}>
             <Typography
@@ -154,9 +158,18 @@ const Display = (props) => {
               }}
             />
             <object type="application/pdf" data={pdfToShow.url + "#toolbar=0"}>
-              <p className="centered">
+              <Typography
+                align="center"
+                sx={{
+                  fontSize: !matches ? "1.1rem" : "0.8rem",
+                  color: "rgb(100,100,100)",
+                  letterSpacing: "0.5px",
+                }}
+              >
                 Unable to load File.Make sure network conectivity is good.
-              </p>
+                <br />
+                or you can download instead
+              </Typography>
             </object>
           </div>
         )}
@@ -193,7 +206,6 @@ const Display = (props) => {
                 ? classes["new_personal-box"]
                 : classes["new_others-box"])
             }
-            ${index === messagesLength - 1 && classes["last-message"]}
           `;
           return (
             <div key={data.createdAt} className={classes["message-div"]}>
@@ -268,8 +280,15 @@ const Display = (props) => {
                           ? "31.6rem"
                           : "27rem"
                       }
+                      // width={!matches ? "max-content" : "17.4rem"}
                       maxWidth={!matches ? "31.6rem" : "17.4rem"}
                       sx={{
+                        width:
+                          data.files[0].type === "application/pdf"
+                            ? !matches
+                              ? "31.6rem"
+                              : "17.4rem"
+                            : "auto",
                         padding: !personalUI
                           ? !matches
                             ? "1.5rem 0.2rem 0.15rem 0.3rem"
@@ -290,21 +309,18 @@ const Display = (props) => {
                               item
                               md={
                                 data.files.length === 1 ||
-                                file.type == "application/pdf"
+                                file.type === "application/pdf"
                                   ? 12
                                   : 6
                               }
                               key={index}
                               sx={{
                                 width:
-                                  file.type == "application/pdf"
+                                  file.type === "application/pdf"
                                     ? "100%"
                                     : "auto",
                                 position: "relative",
                                 transition: "all 200ms",
-                                "&:hover a": {
-                                  display: "block",
-                                },
                               }}
                             >
                               {file.type.startsWith("image") && (
@@ -374,8 +390,7 @@ const Display = (props) => {
                                             0,
                                             12
                                           )}..${file.name.slice(
-                                            file.name.length - 8,
-                                            file.name.length - 4
+                                            file.name.length - 8
                                           )}.pdf`
                                         : file.name}
                                     </Typography>
@@ -454,6 +469,119 @@ const Display = (props) => {
             </div>
           );
         })}
+        {Object.keys(filesToLoad).map((files, index) => {
+          return (
+            <div
+              className={`${classes["text-div"]} ${classes["personal-box"]} ${
+                props.messages[messagesLength - 1]?.id !== props.id
+                  ? classes["new_personal-box"]
+                  : ""
+              }`}
+              style={{ marginLeft: "auto" }}
+              key={files}
+            >
+              {console.log(props.messages[messagesLength - 1]?.id, props.id)}
+              <Grid
+                container
+                spacing={1}
+                maxHeight={!matches ? "31.6rem" : "27rem"}
+                maxWidth={!matches ? "31.6rem" : "17.4rem"}
+                sx={{
+                  width: filesToLoad[files][0].name.endsWith(".pdf")
+                    ? !matches
+                      ? "31.6rem"
+                      : "17.4rem"
+                    : "auto",
+                  padding: !matches
+                    ? "0.2rem 0.2rem 0.15rem 0.3rem"
+                    : "0.1rem 0.1rem 0rem 0.2rem",
+                  overflow: "hidden",
+                  userSelect: "none",
+                }}
+              >
+                {filesToLoad[files].map((file) => {
+                  return (
+                    <Grid
+                      item
+                      md={
+                        filesToLoad[files].length === 1 ||
+                        file.name.endsWith(".pdf")
+                          ? 12
+                          : 6
+                      }
+                      key={file.fileId}
+                      sx={{
+                        width: file.name.endsWith(".pdf") ? "100%" : "auto",
+                        position: "relative",
+                        transition: "all 200ms",
+                        "&:hover a": {
+                          display: "block",
+                        },
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <div
+                        className={`${classes["file-loader-msg"]} ${
+                          file.name.endsWith(".pdf")
+                            ? classes["pdf-msg-container"]
+                            : classes["img-container"]
+                        }`}
+                        style={{
+                          width: file.name.endsWith(".pdf")
+                            ? "100%"
+                            : !matches
+                            ? "15rem"
+                            : "8rem",
+                          backgroundColor: !file.name.endsWith(".pdf")
+                            ? "rgba(111, 111, 111, 0.6)"
+                            : "auto",
+                          padding: file.name.endsWith(".pdf")
+                            ? !matches
+                              ? "0.17rem 0.5rem"
+                              : "0.35rem 0.5rem"
+                            : "auto",
+                        }}
+                      >
+                        <div className={classes["file-loader-container"]}>
+                          <LoadingSpinner
+                            className={
+                              file.name.endsWith(".pdf") ? "pdf-spinner" : ""
+                            }
+                          />
+                          <Typography
+                            align="center"
+                            sx={{
+                              fontSize: !matches ? "1.1rem" : "0.7rem",
+                              textTransform: "uppercase",
+                              color: "rgb(180,180,180)",
+                              paddingBottom: "0.3rem",
+                            }}
+                          >
+                            {console.log(file.name)}
+                            {!file.name.endsWith(".pdf")
+                              ? file.name.length > 15
+                                ? `${file.name.slice(0, 7)}...${file.name.slice(
+                                    file.name.length - 5
+                                  )}`
+                                : file.name
+                              : file.name.length > 20
+                              ? `${file.name.slice(0, 12)}...${file.name.slice(
+                                  file.name.length - 8
+                                )}`
+                              : file.name}
+                          </Typography>
+                        </div>
+                      </div>
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            </div>
+          );
+        })}
+        <div className={classes["last-message"]} />
       </div>
     </ScrollToBottom>
   );

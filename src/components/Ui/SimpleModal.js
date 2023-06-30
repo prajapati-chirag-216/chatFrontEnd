@@ -29,7 +29,8 @@ const SimpleModal = (props) => {
         sx={{
           ...style,
           width: matches ? "80vw" : style.width,
-          height: matches ? "80vh" : "auto",
+          height: matches ? "fit-content" : "auto",
+          maxHeight: matches ? "80vh" : "auto",
           padding: matches ? "0.8rem" : style.padding,
           userSelect: "none",
           gap: "1rem",
