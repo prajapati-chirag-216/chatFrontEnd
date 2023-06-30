@@ -499,82 +499,88 @@ const Display = (props) => {
                   userSelect: "none",
                 }}
               >
-                {filesToLoad[files].map((file) => {
+                {filesToLoad[files].map((file, index) => {
                   return (
-                    <Grid
-                      item
-                      md={
-                        filesToLoad[files].length === 1 ||
-                        file.name.endsWith(".pdf")
-                          ? 12
-                          : 6
-                      }
-                      key={file.fileId}
-                      sx={{
-                        width: file.name.endsWith(".pdf") ? "100%" : "auto",
-                        position: "relative",
-                        transition: "all 200ms",
-                        "&:hover a": {
-                          display: "block",
-                        },
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <div
-                        className={`${classes["file-loader-msg"]} ${
+                    index < 4 && (
+                      <Grid
+                        item
+                        md={
+                          filesToLoad[files].length === 1 ||
                           file.name.endsWith(".pdf")
-                            ? classes["pdf-msg-container"]
-                            : classes["img-container"]
-                        }`}
-                        style={{
-                          width: file.name.endsWith(".pdf")
-                            ? "100%"
-                            : !matches
-                            ? "15rem"
-                            : "8rem",
-                          backgroundColor: !file.name.endsWith(".pdf")
-                            ? "rgba(111, 111, 111, 0.6)"
-                            : "auto",
-                          padding: file.name.endsWith(".pdf")
-                            ? !matches
-                              ? "0.17rem 0.5rem"
-                              : "0.35rem 0.5rem"
-                            : "auto",
+                            ? 12
+                            : 6
+                        }
+                        key={file.fileId}
+                        sx={{
+                          width: file.name.endsWith(".pdf") ? "100%" : "auto",
+                          position: "relative",
+                          transition: "all 200ms",
+                          "&:hover a": {
+                            display: "block",
+                          },
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
                         }}
                       >
-                        <div className={classes["file-loader-container"]}>
-                          <LoadingSpinner
-                            className={
-                              file.name.endsWith(".pdf") ? "pdf-spinner" : ""
-                            }
-                          />
-                          <Typography
-                            align="center"
-                            sx={{
-                              fontSize: !matches ? "1.1rem" : "0.7rem",
-                              textTransform: "uppercase",
-                              color: "rgb(180,180,180)",
-                              paddingBottom: "0.3rem",
-                            }}
-                          >
-                            {console.log(file.name)}
-                            {!file.name.endsWith(".pdf")
-                              ? file.name.length > 15
-                                ? `${file.name.slice(0, 7)}...${file.name.slice(
-                                    file.name.length - 5
-                                  )}`
-                                : file.name
-                              : file.name.length > 20
-                              ? `${file.name.slice(0, 12)}...${file.name.slice(
-                                  file.name.length - 8
-                                )}`
-                              : file.name}
-                          </Typography>
+                        <div
+                          className={`${classes["file-loader-msg"]} ${
+                            file.name.endsWith(".pdf")
+                              ? classes["pdf-msg-container"]
+                              : classes["img-container"]
+                          }`}
+                          style={{
+                            width: file.name.endsWith(".pdf")
+                              ? "100%"
+                              : !matches
+                              ? "15rem"
+                              : "8rem",
+                            backgroundColor: !file.name.endsWith(".pdf")
+                              ? "rgba(111, 111, 111, 0.6)"
+                              : "auto",
+                            padding: file.name.endsWith(".pdf")
+                              ? !matches
+                                ? "0.17rem 0.5rem"
+                                : "0.35rem 0.5rem"
+                              : "auto",
+                          }}
+                        >
+                          <div className={classes["file-loader-container"]}>
+                            <LoadingSpinner
+                              className={
+                                file.name.endsWith(".pdf") ? "pdf-spinner" : ""
+                              }
+                            />
+                            <Typography
+                              align="center"
+                              sx={{
+                                fontSize: !matches ? "1.1rem" : "0.7rem",
+                                textTransform: "uppercase",
+                                color: "rgb(180,180,180)",
+                                paddingBottom: "0.3rem",
+                              }}
+                            >
+                              {console.log(file.name)}
+                              {!file.name.endsWith(".pdf")
+                                ? file.name.length > 15
+                                  ? `${file.name.slice(
+                                      0,
+                                      7
+                                    )}...${file.name.slice(
+                                      file.name.length - 5
+                                    )}`
+                                  : file.name
+                                : file.name.length > 20
+                                ? `${file.name.slice(
+                                    0,
+                                    12
+                                  )}...${file.name.slice(file.name.length - 8)}`
+                                : file.name}
+                            </Typography>
+                          </div>
                         </div>
-                      </div>
-                    </Grid>
+                      </Grid>
+                    )
                   );
                 })}
               </Grid>
