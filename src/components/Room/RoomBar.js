@@ -8,7 +8,7 @@ import classes from "./RoomBar.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { userActions } from "../../store/user-slice";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const RoomBar = (props) => {
   const matches = useMediaQuery("(max-width:768px)");
@@ -175,23 +175,23 @@ const RoomBar = (props) => {
           />
           {users.room}
         </Typography>
-
-        <ExitToAppRoundedIcon
-          color="white"
-          onClick={() => navigate("/dashbord", { replace: true })}
-          sx={{
-            fontSize: !matches ? "1.8rem" : "1.3rem",
-            color: "gray",
-            cursor: "pointer",
-            padding: "0.5rem",
-            borderRadius: "4px",
-            transition: "all 100ms",
-            "&:hover": {
-              backgroundColor: "#33393d",
-              color: "whitesmoke",
-            },
-          }}
-        />
+        <NavLink to="/dashbord" reloadDocument>
+          <ExitToAppRoundedIcon
+            color="white"
+            sx={{
+              fontSize: !matches ? "1.8rem" : "1.3rem",
+              color: "gray",
+              cursor: "pointer",
+              padding: "0.5rem",
+              borderRadius: "4px",
+              transition: "all 100ms",
+              "&:hover": {
+                backgroundColor: "#33393d",
+                color: "whitesmoke",
+              },
+            }}
+          />
+        </NavLink>
       </div>
       <div className={classes["user-div"]}>
         {users.usersInRoom &&
