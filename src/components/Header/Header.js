@@ -22,7 +22,7 @@ const Header = () => {
         }}
       >
         <img src={logo} className={classes["chat-logo"]} />
-        Chat App
+        InterChat
       </Typography>
       <Divider
         sx={{
