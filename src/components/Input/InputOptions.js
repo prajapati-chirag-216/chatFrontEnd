@@ -9,7 +9,6 @@ import Stack from "@mui/material/Stack";
 import AttachmentOutlinedIcon from "@mui/icons-material/AttachmentOutlined";
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
 import InsertPhotoOutlinedIcon from "@mui/icons-material/InsertPhotoOutlined";
-import VideoCameraBackOutlinedIcon from "@mui/icons-material/VideoCameraBackOutlined";
 import FmdGoodOutlinedIcon from "@mui/icons-material/FmdGoodOutlined";
 import { useMediaQuery } from "@mui/material";
 import classes from "./InputOptions.module.css";
@@ -139,7 +138,7 @@ const InputOptions = (props) => {
           <AttachmentOutlinedIcon
             sx={{
               color: "whitesmoke",
-              fontSize: !matches ? "1.8rem" : "1rem",
+              fontSize: !matches ? "1.8rem" : "1.2rem",
               transform: "rotate(140deg)",
             }}
           />
@@ -179,14 +178,15 @@ const InputOptions = (props) => {
                       onClick={handleFileInputClick}
                       sx={{
                         ...MenuStyle,
-                        fontSize: !matches ? "1.1rem" : "0.8rem",
+                        fontSize: !matches ? "1.1rem" : "0.9rem",
                         minHeight: !matches ? "36px" : "20px",
+                        letterSpacing: "0.5px",
                       }}
                     >
                       <InsertDriveFileOutlinedIcon
                         sx={{
                           marginRight: "5px",
-                          fontSize: !matches ? "1.1rem" : "0.8rem",
+                          fontSize: !matches ? "1.1rem" : "0.9rem",
                           letterSpacing: !matches ? "1px" : "0.5px",
                         }}
                       />
@@ -204,14 +204,15 @@ const InputOptions = (props) => {
                       onClick={handleImageInputClick}
                       sx={{
                         ...MenuStyle,
-                        fontSize: !matches ? "1.1rem" : "0.8rem",
+                        fontSize: !matches ? "1.1rem" : "0.9rem",
                         minHeight: !matches ? "36px" : "20px",
+                        letterSpacing: "0.5px",
                       }}
                     >
                       <InsertPhotoOutlinedIcon
                         sx={{
                           marginRight: "5px",
-                          fontSize: !matches ? "1.1rem" : "0.8rem",
+                          fontSize: !matches ? "1.1rem" : "0.9rem",
                           letterSpacing: !matches ? "1px" : "0.5px",
                         }}
                       />
@@ -229,14 +230,15 @@ const InputOptions = (props) => {
                       onClick={handleLocationInputClick}
                       sx={{
                         ...MenuStyle,
-                        fontSize: !matches ? "1.1rem" : "0.8rem",
+                        fontSize: !matches ? "1.1rem" : "0.9rem",
                         minHeight: !matches ? "36px" : "20px",
+                        letterSpacing: "0.5px",
                       }}
                     >
                       <FmdGoodOutlinedIcon
                         sx={{
                           marginRight: "5px",
-                          fontSize: !matches ? "1.1rem" : "0.8rem",
+                          fontSize: !matches ? "1.1rem" : "0.9rem",
                           letterSpacing: !matches ? "1px" : "0.5px",
                         }}
                       />

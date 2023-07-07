@@ -9,41 +9,24 @@
     user-select: none;
     border: 1px solid rgba(26, 25, 25, 0.827);
     bottom: 0;
-
 }
 
-.input-div>input {
+.input-div>.text-div {
     background-color: transparent;
-    color: aliceblue;
-    letter-spacing: 0.8px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 1.1rem;
     flex: 10;
     border: none;
     outline: none;
-    padding: 1rem;
-}
-
-.input-div>input::placeholder {
-    letter-spacing: 1px;
-}
-
-.input-div>input:focus {
-    outline: none;
+    background-color: #33393d92;
+    border-radius: 5px;
 }
 
 @media(max-width:768px) {
     .input-div {
         gap: 0.5rem;
+        padding: 0 0.5rem;
     }
 
-    .input-div>input::placeholder {
-        letter-spacing: 0.5px;
-    }
-
-    .input-div>input {
-        letter-spacing: 0.5px;
-        font-size: 0.9rem;
-        padding: 0.5rem 0.8rem;
+    .text-div {
+        border-radius: 3px;
     }
 }

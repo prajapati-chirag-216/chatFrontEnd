@@ -1,9 +1,8 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import moment from "moment";
 import {
   Box,
   Button,
-  Container,
   Divider,
   Grid,
   Typography,
@@ -181,8 +180,8 @@ const Display = (props) => {
             backgroundColor: "rgba(70,70,70,0.45)",
             margin: !matches
               ? "1rem 3rem 0.5rem 3rem"
-              : "0.5rem 1rem 0.8rem 1rem",
-            padding: !matches ? "0.5rem 1rem" : "0.7rem",
+              : "0.4rem 1rem 0.6rem 1rem",
+            padding: !matches ? "0.5rem 1rem" : "0.5rem",
             borderRadius: "10px",
             width: "fit-content",
             alignSelf: "center",
@@ -252,16 +251,18 @@ const Display = (props) => {
                     <Typography
                       letterSpacing={!matches ? "1px" : "0.5px"}
                       style={{
-                        fontSize: !matches ? "1.1rem" : "0.8rem",
+                        fontSize: !matches ? "1.1rem" : "0.9rem",
+                        wordBreak: "break-all",
                         padding: !personalUI
                           ? !matches
                             ? "1.2rem 5rem 0.4rem 0.4rem"
-                            : "1rem 4.5rem 0.2rem 0.3rem"
+                            : "1rem 2.5rem 0.2rem 0.3rem"
                           : !matches
-                          ? "0.4rem 5rem 0.4rem 0.4rem"
-                          : "0.2rem 4.5rem 0.3rem 0.3rem",
+                          ? "0.4rem 4rem 0.4rem 0.4rem"
+                          : "0.2rem 2.5rem 0.3rem 0.3rem",
                         fontFamily:
                           "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+                        maxWidth: !matches ? "45vw" : "70vw",
                       }}
                     >
                       {data.message}

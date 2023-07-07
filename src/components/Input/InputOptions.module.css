@@ -1,7 +1,7 @@
 .image-span {
     transition: all 100ms;
     border-radius: 4px;
-    padding: 0.8rem;
+    padding: 0.68rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,8 +12,8 @@
     background-color: #33393d;
 }
 
-@media(max-width:768px) {
+/* @media(max-width:768px) {
     .image-span {
         padding: 0.6rem;
     }
-}
+} */
