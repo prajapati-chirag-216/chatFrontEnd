@@ -10,8 +10,6 @@ import { messageActions } from "../../store/message-slice";
 import { uiActions } from "../../store/ui-slice";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-// const ENDPOINT = "http://localhost:8000";
-// const ENDPOINT = "http://192.168.0.106:8000";
 const ENDPOINT = "https://chatbackend-production-3e35.up.railway.app";
 
 let socket;
@@ -238,6 +236,16 @@ const Chat = (props) => {
         const filteredPrivateUsers = roomUsers.usersInRoom.filter(
           (user) => user.id !== data.removedUser.id
         );
+        if (
+          filteredPrivateUsers[filteredPrivateUsers.length - 1].id !== "GROUPID"
+        ) {
+          return dispatch(
+            userActions.setUsersInRoom({
+              room: roomUsers.room,
+              usersInRoom: filteredPrivateUsers,
+            })
+          );
+        }
         const filteredGroupUsers = filteredPrivateUsers[
           filteredPrivateUsers.length - 1
         ].groupUsers.usersInRoom.filter(
@@ -317,18 +325,18 @@ const Chat = (props) => {
   ]);
 
   // ------------- Stop from Page Refrece ------------------------
-  useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      event.preventDefault();
-      event.returnValue = ""; // Chrome requires this line
-    };
+  // useEffect(() => {
+  //   const handleBeforeUnload = (event) => {
+  //     event.preventDefault();
+  //     event.returnValue = ""; // Chrome requires this line
+  //   };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+  //   window.addEventListener("beforeunload", handleBeforeUnload);
 
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("beforeunload", handleBeforeUnload);
+  //   };
+  // }, []);
   // -------------------------------------------------------------
 
   return (

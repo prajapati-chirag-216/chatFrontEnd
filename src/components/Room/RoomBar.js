@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import ReactDOM from "react-dom";
 import { Typography, useMediaQuery } from "@mui/material";
 import ExitToAppRoundedIcon from "@mui/icons-material/ExitToAppRounded";
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { userActions } from "../../store/user-slice";
 import { NavLink, useNavigate } from "react-router-dom";
+import AlertDialog from "../Ui/AlertDialog";
 
 const RoomBar = (props) => {
   const matches = useMediaQuery("(max-width:768px)");
@@ -17,6 +18,7 @@ const RoomBar = (props) => {
   const userDetails = useSelector((state) => state.user.userDetails);
   const privateUsers = useSelector((state) => state.user.privateUsers);
   const userId = useSelector((state) => state.user.userId);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const addUserToPrivateRoomHandler = (user) => {
     let roomName;
@@ -141,6 +143,19 @@ const RoomBar = (props) => {
     if (data == -1) return false;
     return true;
   };
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+  const handleCancel = () => {
+    setIsOpen(false);
+  };
+  const handleAgree = () => {
+    setIsOpen(false);
+    window.location.replace("/dashbord");
+  };
   return (
     <div
       className={`${classes["roombar-div"]} ${
@@ -150,6 +165,12 @@ const RoomBar = (props) => {
           : classes["close_roombar-slider"])
       }`}
     >
+      <AlertDialog
+        open={isOpen}
+        onClose={handleClose}
+        onCancel={handleCancel}
+        onAgree={handleAgree}
+      />
       {props.isOpen &&
         ReactDOM.createPortal(
           <div className={classes["backdrop-div"]} onClick={props.onClick} />,
@@ -175,23 +196,24 @@ const RoomBar = (props) => {
           />
           {users.room}
         </Typography>
-        <NavLink to="/dashbord" reloadDocument>
-          <ExitToAppRoundedIcon
-            color="white"
-            sx={{
-              fontSize: !matches ? "1.8rem" : "1.3rem",
-              color: "gray",
-              cursor: "pointer",
-              padding: "0.5rem",
-              borderRadius: "4px",
-              transition: "all 100ms",
-              "&:hover": {
-                backgroundColor: "#33393d",
-                color: "whitesmoke",
-              },
-            }}
-          />
-        </NavLink>
+        {/* <NavLink to="/dashbord" reloadDocument> */}
+        <ExitToAppRoundedIcon
+          color="white"
+          onClick={handleOpen}
+          sx={{
+            fontSize: !matches ? "1.8rem" : "1.3rem",
+            color: "gray",
+            cursor: "pointer",
+            padding: "0.5rem",
+            borderRadius: "4px",
+            transition: "all 100ms",
+            "&:hover": {
+              backgroundColor: "#33393d",
+              color: "whitesmoke",
+            },
+          }}
+        />
+        {/* </NavLink> */}
       </div>
       <div className={classes["user-div"]}>
         {users.usersInRoom &&
