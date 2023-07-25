@@ -10,7 +10,7 @@ import { messageActions } from "../../store/message-slice";
 import { uiActions } from "../../store/ui-slice";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-const ENDPOINT = "https://chatbackend-production-3e35.up.railway.app";
+const ENDPOINT = "https://inter-chat-app.onrender.com";
 
 let socket;
 
